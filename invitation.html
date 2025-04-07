@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>～Wedding Invitation～</title>
+    <script type="text/javascript">
+        let submitted = false;
+    </script>
+    <iframe
+        name="hidden_iframe"
+        id="hidden_iframe"
+        style="display: none"
+        onload="if(submitted){window.location='https://google.com';}"
+    ></iframe>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        .name-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .name-group input[type="text"] {
+            width: calc(50% - 5px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="email"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: vertical; /* 縦方向のリサイズを可能にする */
+            min-height: 100px; /* 初期表示で100pxの高さを持たせる */
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #a58faa;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #8c7380;
+        }
+
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ご出席のご連絡</h1>
+        <p class="message">お忙しいところ恐縮ですが、ご回答をお願いいたします。</p>
+        <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfeisK_-ud6T78jsv0cK5fitYfsqyleAJgn3QUGmCgWfUDD5g/formResponse"
+            method="post"
+            target="hidden_iframe"
+            onsubmit="submitted=true;"
+            class="c-form"
+        >
+            <div class="form-group">
+                <label>ご出席</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="entry.787782384" value="出席" required> 出席</label>
+                    <label><input type="radio" name="entry.787782384" value="欠席" required> 欠席</label>
+                </div>
+            </div>
+
+            <div id="guest-info" class="hidden">
+                <div class="form-group">
+                    <label>ゲスト区分</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="entry.1864524029" value="新郎側ゲスト" required> 新郎側</label>
+                        <label><input type="radio" name="entry.1864524029" value="新婦側ゲスト" required> 新婦側</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>同伴者数</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="entry.848965256" value="なし" required> なし</label>
+                        <label><input type="radio" name="entry.848965256" value="1名" required> 1名</label>
+                        <label><input type="radio" name="entry.848965256" value="2名" required> 2名</label>
+                        <label><input type="radio" name="entry.848965256" value="3名" required> 3名</label>
+                        <label><input type="radio" name="entry.848965256" value="4名" required> 4名</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>氏名（漢字）</label>
+                <div class="name-group">
+                    <input type="text" id="name_kanji_sei" name="entry.541479051" placeholder="山田" required>
+                    <input type="text" id="name_kanji_mei" name="entry.2032851559" placeholder="太郎" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>氏名（カナ）</label>
+                <div class="name-group">
+                    <input type="text" id="name_kana_sei" name="entry.379597458" placeholder="ヤマダ" required>
+                    <input type="text" id="name_kana_mei" name="entry.2109528420" placeholder="タロウ" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>氏名（アルファベット）</label>
+                <div class="name-group">
+                    <input type="text" id="name_alphabet_sei" name="entry.568837791" placeholder="Yamada" required>
+                    <input type="text" id="name_alphabet_mei" name="entry.1477214644" placeholder="Taro" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">メールアドレス</label>
+                <input type="email" id="email" name="entry.1361382366" placeholder="email@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">アレルギーやメッセージ等 (任意)</label>
+                <textarea id="message" name="entry.272875134"></textarea>
+            </div>
+
+            <button type="submit">送信する</button>
+        </form>
+    </div>
+
+    <script>
+        const attendanceRadio = document.querySelectorAll('input[name="entry.787782384"]');
+        const guestInfoSection = document.getElementById('guest-info');
+
+        attendanceRadio.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === '出席') {
+                    guestInfoSection.classList.remove('hidden');
+                } else {
+                    guestInfoSection.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
