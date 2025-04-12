@@ -335,7 +335,7 @@
                     });
                     // 同伴者数ラジオボタンの選択を解除（任意）
                     // companionNumberRadio.forEach(r => r.checked = false);
-                }
+                }    
             });
         });
 
@@ -364,12 +364,14 @@
                     group.classList.remove('hidden');
                     inputs.forEach(input => {
                         input.required = true; // 必須にする
+                        input.disabled = false; // 有効にする
                     });
                 } else {
                     // 非表示にする場合
                     group.classList.add('hidden');
                     inputs.forEach(input => {
                         input.required = false; // 必須でなくす
+                        input.disabled = true; // 無効にする
                         input.value = ''; // 値をクリア（任意）
                     });
                 }
@@ -393,6 +395,7 @@
                  // 同伴者グループ内の項目は updateCompanionFields で制御するので除外
                  if (!el.closest('.companion-group')) {
                     if (isRequired) {
+                        el.disabled = false; // 有効にする
                          // 元々必須だった項目に required を再設定 (ここでは単純化して全てに設定)
                          // ※ name="entry.272875134" (メッセージ欄) など、任意項目は除く処理が必要になる場合がある
                         if(el.type !== 'radio' && el.name !== 'entry.272875134' && el.name !== 'entry.ABSENCE_MESSAGE') { // ラジオと任意メッセージ欄を除く
@@ -405,6 +408,7 @@
                     } else {
                         // 非表示セクションの項目は必須でなくす
                         el.required = false;
+                        el.disabled = true; // 無効にする
                          // ラジオボタンの選択も解除（任意）
                         // if(el.type === 'radio') el.checked = false;
                     }
