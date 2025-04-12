@@ -6,12 +6,13 @@
     <title>～Wedding Invitation～</title>
     <script type="text/javascript">
         let submitted = false;
+        let attendance = false;
     </script>
     <iframe
         name="hidden_iframe"
         id="hidden_iframe"
         style="display: none"
-        onload="if(submitted){window.location='thanks.html';}"
+        onload="if(submitted && attendance){window.location='thanks_attendance.html';}else if(submitted){window.location='thanks_absence.html';}"
     ></iframe>
     <style>
         body {
@@ -321,6 +322,8 @@
                     setRequired(absenceDetailsSection, false);
                     // 同伴者数の状態を再評価
                     updateCompanionFields();
+                    //出欠をtrueに
+                    attendance = true;
                 } else { // 欠席の場合
                     attendanceDetailsSection.classList.add('hidden');
                     absenceDetailsSection.classList.remove('hidden');
@@ -335,6 +338,9 @@
                     });
                     // 同伴者数ラジオボタンの選択を解除（任意）
                     // companionNumberRadio.forEach(r => r.checked = false);
+                    
+                    //出欠をfalseに
+                    attendance = false;
                 }    
             });
         });
