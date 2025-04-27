@@ -1,1 +1,193 @@
-<b>test</b>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>～Wedding Invitation～</title>
+    <script type="text/javascript">
+        let submitted = false;
+        let attendance = false;
+    </script>
+    <iframe
+        name="hidden_iframe"
+        id="hidden_iframe"
+        style="display: none"
+        onload="if(submitted && attendance){window.location='thanks_attendance.html';}else if(submitted){window.location='thanks_absence.html';}"
+    ></iframe>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0; /* 上下の余白を追加 */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: bold;
+        }
+        /* ラジオボタンやチェックボックスのラベルを少し調整 */
+        .radio-group label,
+        .checkbox-group label {
+            display: inline-flex; /* label内の要素を揃える */
+            align-items: center; /* 縦方向中央揃え */
+            margin-bottom: 0;
+            font-weight: normal;
+            cursor: pointer; /* クリック可能を示す */
+            margin-right: 15px; /* ラジオボタン間のスペース */
+        }
+        .radio-group label:last-child,
+        .checkbox-group label:last-child {
+             margin-right: 0;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+             margin-right: 5px;
+             /* 見た目を少し大きく */
+             width: 16px;
+             height: 16px;
+             cursor: pointer;
+        }
+
+
+        .name-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .name-group input[type="text"] {
+            width: calc(50% - 5px); /* 姓・名で分割 */
+        }
+
+        /* 全てのテキスト・メール入力欄の共通スタイル */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%; /* Name Group内の input は .name-group input で上書きされる */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* paddingを含めてwidth 100% に */
+            font-size: 16px;
+        }
+
+
+        textarea {
+            resize: vertical; /* 縦方向のリサイズを可能にする */
+            min-height: 100px; /* 初期表示で100pxの高さを持たせる */
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap; /* 画面幅が狭い場合に折り返す */
+            gap: 10px 20px; /* 縦横の隙間 */
+        }
+
+        button[type="submit"] {
+            background-color: #a58faa;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block; /* 中央揃えのために block 要素に */
+            margin: 30px auto 0; /* 上にマージン、左右autoで中央揃え */
+            width: auto; /* 幅を自動に */
+            min-width: 150px; /* 最低幅 */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #8c7380;
+        }
+
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* 同伴者情報欄のスタイル */
+        .companion-group {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            background-color: #fafafa;
+        }
+        .companion-group label {
+             margin-top: 10px; /* 各ラベルの間にスペース */
+             font-size: 0.9em;
+        }
+        .companion-group label:first-child {
+             margin-top: 0;
+        }
+
+        /* 必須マーク (任意) */
+        .required-mark {
+            color: red;
+            font-size: 0.8em;
+            margin-left: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>test</h1>
+        <p class="message">うほい</p>
+    </div>
+
+    <script>
+        
+        <!--// 初期読み込み時に出席が選択されていた場合の処理（ページ再読み込み時など）
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialAttendance = document.querySelector('input[name="entry.787782384"]:checked');
+             if (initialAttendance && initialAttendance.value === '出席') {
+                 attendanceDetailsSection.classList.remove('hidden');
+                 setRequired(attendanceDetailsSection, true);
+                 updateCompanionFields(); // 同伴者欄も初期化
+             } else if (initialAttendance && initialAttendance.value === '欠席'){
+                 absenceDetailsSection.classList.remove('hidden');
+                 setRequired(absenceDetailsSection, true);
+             } else {
+                // 何も選択されていない場合（通常はないはずだが念のため）
+                setRequired(attendanceDetailsSection, false);
+                setRequired(absenceDetailsSection, false);
+             }
+        });-->
+
+    </script>
+</body>
+</html>
