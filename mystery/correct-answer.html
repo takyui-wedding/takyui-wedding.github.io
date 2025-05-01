@@ -86,7 +86,7 @@
             font-size: 16px;
         }
 
-        button[type="submit"] {
+        button[type="button"] {
             background-color: #a58faa;
             color: white;
             padding: 12px 20px;
@@ -101,7 +101,7 @@
             min-width: 150px; /* 最低幅 */
         }
 
-        button[type="submit"]:hover {
+        button[type="button"]:hover {
             background-color: #8c7380;
         }
 
@@ -153,12 +153,87 @@
                 <div class="form-group">
                     <label>あなた自身のIDを入力してください。<span class="required-mark">*</span></label>
                     <div class="name-group">
-                        <input type="text" id="answer-word" name="answer-word" required>
+                        <input type="text" id="guestId" name="guestId" required>
                     </div>
                 </div>
             </div>
-             <button type="submit">送信する</button>
+             <button type="button" id="submitButton">送信する</button>
         </form>
     </div>
+
+    <script>
+        // ボタン要素と入力要素を取得
+        const submitButton = document.getElementById('submitButton');
+        const guestIdText = document.getElementById('guestId');
+
+        // 送信ボタンがクリックされたときの処理
+        submitButton.addEventListener('click', async () => {
+            const guestId = guestIdText.value.trim(); // 入力値を取得し、前後の空白を削除
+
+            // IDが入力されているかチェック
+            if (!guestId) {
+                alert('IDを入力してください。');
+                return; // IDが空なら処理を中断
+            }
+
+            // APIエンドポイントのベースURL (実際のURLに置き換えてください)
+            const baseUrl = 'https://script.google.com/macros/s/AKfycbyz_RdBEzl4vOrVE46UtNhRR3FUMftUJVqvnYK3C0uvB8_J72smhLpwoWDZ0OGj-P1C/exec';
+            // クエリパラメータを付けてURLを構築 (IDをURLエンコードする)
+            const apiUrl = `${baseUrl}?method=動画URL取得&guestId=${encodeURIComponent(guestId)}`;
+
+            try {
+                // fetch APIを使用してGETリクエストを送信
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        // 必要に応じてヘッダーを追加
+                        'Accept': 'application/json' // サーバーがJSONを返すことを期待
+                    }
+                });
+
+                // サーバーからの応答ステータスコードをチェック
+                if (response.ok) {
+                    // サーバー処理が正常終了 (ステータスコード 200-299)
+                    try {
+                        const data = await response.json(); // 応答ボディをJSONとして解析
+                        if (data && data.movieUrrl) {
+                            // redirectUrl が存在すれば、そのURLにリダイレクト
+                            console.log('リダイレクトします:', data.movieUrrl);
+                            alert('あなたとの思い出をお見せしてもよろしいでしょうか。');
+                            window.location.href = data.movieUrrl;
+                        } else {
+                            // 正常終了したが、期待するデータ形式でない場合
+                            console.error('サーバーからの応答にredirectUrlが含まれていませんでした。', data);
+                            alert('サーバーからの応答が予期しない形式です。');
+                        }
+                    } catch (jsonError) {
+                        // JSON解析に失敗した場合
+                        console.error('JSON解析エラー:', jsonError);
+                        alert('サーバーからの応答を処理できませんでした。');
+                    }
+                } else {
+                    // サーバー処理が異常終了 (ステータスコード 4xx, 5xx など)
+                    console.error('サーバーエラー:', response.status, response.statusText);
+                    // エラーメッセージを組み立て (可能であればサーバーからの詳細を使う)
+                    let errorMessage = `サーバー処理でエラーが発生しました。\nステータス: ${response.status}`;
+                    try {
+                        // サーバーがエラー詳細をテキストで返している場合、それを表示
+                        const errorText = await response.text();
+                        if(errorText) {
+                            errorMessage += `\n詳細: ${errorText}`;
+                        }
+                    } catch (textError) {
+                        // エラー詳細の取得に失敗した場合
+                         console.error('エラー詳細の取得失敗:', textError);
+                    }
+                    alert(errorMessage);
+                }
+            } catch (networkError) {
+                // ネットワークエラーやfetch自体の失敗
+                console.error('ネットワークエラー:', networkError);
+                alert('リクエストの送信中にネットワークエラーが発生しました。接続を確認してください。');
+            }
+        });
+    </script>
 </body>
 </html>
