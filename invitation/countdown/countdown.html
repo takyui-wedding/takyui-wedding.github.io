@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COUNTDOWN</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="countdown-wrapper">
+        <div class="main-title">COUNT DOWN</div>
+
+        <div class="countdown-display">
+            <div class="days-container">
+                <span id="days" class="days-value">00</span>
+                <span class="days-label">DAYS</span>
+            </div>
+
+            <div class="time-container">
+                <div class="time-unit">
+                    <span id="hours" class="time-value">00</span>
+                    <span class="time-label">HOURS</span>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes" class="time-value">00</span>
+                    <span class="time-label">MINUTES</span>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds" class="time-value">00</span>
+                    <span class="time-label">SECONDS</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="countdown-finished" class="countdown-finished-message" style="display:none;">
+            THE EVENT HAS STARTED!
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('background.jpg'); /* 背景画像のパス */
+    background-size: cover;
+    background-position: center;
+    font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif; /* よりモダンなフォント候補 */
+    color: #fff; /* 背景画像によっては白の方が見やすい */
+    text-shadow: 0 0 8px rgba(0,0,0,0.7); /* 文字に影をつけて視認性向上 */
+}
+
+.countdown-wrapper {
+    text-align: center;
+    /* background-color: rgba(0, 0, 0, 0.5); /* 背景を少し暗く半透明にする例 */
+    padding: 30px 40px;
+    border-radius: 20px;
+    /* ox-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
+    width: auto;
+    max-width: 90%;
+}
+
+.main-title {
+    font-size: 2.8em; /* タイトルを大きく */
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 0.1em; /* 文字間隔 */
+    margin-bottom: 30px; /* 日数との間隔 */
+    text-transform: uppercase; /* 大文字に */
+}
+
+.countdown-display { /* 日数と時分秒を囲むコンテナ */
+    /* ここで特に指定がなければ、wrapperのtext-align:centerが効く */
+}
+
+.days-container {
+    margin-bottom: 25px; /* 日数と時分秒の間隔 */
+}
+
+.days-value {
+    font-size: 6em; /* 日数を非常に大きく */
+    font-weight: bold;
+    color: #f0f0f0;
+    line-height: 1;
+    display: block; /* ブロック要素にして改行を促す */
+}
+
+.days-label {
+    font-size: 1.5em;
+    color: #f0f0f0;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.time-container {
+    display: flex;
+    justify-content: center; /* 時分秒ユニットを中央揃え */
+    align-items: baseline;
+    gap: 20px; /* 各ユニット間のスペース */
+}
+
+.time-unit {
+    display: flex;
+    flex-direction: column; /* 数字とラベルを縦に */
+    align-items: center;
+    min-width: 80px; /* 各ユニットの最小幅 */
+}
+
+.time-value {
+    font-size: 3em; /* 時分秒の数字の大きさ */
+    font-weight: bold;
+    color: #eee;
+    line-height: 1;
+}
+
+.time-label {
+    font-size: 0.9em;
+    color: #ccc;
+    margin-top: 8px;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.countdown-finished-message {
+    font-size: 2.5em;
+    color: #f39c12; /* 終了メッセージの色 */
+    margin-top: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* スマートフォン向けのスタイル調整 */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.2em;
+        margin-bottom: 25px;
+    }
+    .days-value {
+        font-size: 5em;
+    }
+    .days-label {
+        font-size: 1.2em;
+    }
+    .time-container {
+        gap: 15px;
+    }
+    .time-value {
+        font-size: 2.2em;
+    }
+    .time-label {
+        font-size: 0.8em;
+    }
+    .countdown-wrapper {
+        padding: 25px 20px;
+    }
+    .countdown-finished-message {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .days-value {
+        font-size: 4em;
+    }
+    .days-label {
+        font-size: 1em;
+    }
+    .time-container {
+        flex-direction: row; /* 小画面でも横並びを維持するか、縦にするか検討 */
+                                /* flex-direction: column; であれば縦積みになる */
+        gap: 10px;
+    }
+    .time-unit {
+        min-width: 60px;
+    }
+    .time-value {
+        font-size: 1.8em;
+    }
+    .time-label {
+        font-size: 0.7em;
+    }
+    .countdown-finished-message {
+        font-size: 1.5em;
+    }
+}
