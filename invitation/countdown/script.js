@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownFinishedEl = document.getElementById('countdown-finished');
 
     // ターゲット日時 (年/月/日 時:分:秒)
-    const targetDate = new Date('2025/05/24 12:30:00').getTime(); // PIARYのサイトと同じ日付
+    const targetDate = new Date('2025/09/28 9:30:00').getTime(); // PIARYのサイトと同じ日付
     // 現在の日時 (2025/05/10 JST) でテストする場合、以下のように近い未来の日付で試すと動作確認しやすいです
     // const targetDate = new Date(new Date().getTime() + 10 * 1000).getTime(); // 10秒後など
 
