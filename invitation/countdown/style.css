@@ -21,6 +21,7 @@ body {
     /* ox-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); */
     width: auto;
     max-width: 90%;
+    font-family: 'Times','Times New Roman','YuMincho',cursive;
 }
 
 .main-title {
