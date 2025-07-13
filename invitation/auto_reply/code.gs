@@ -1,4 +1,4 @@
-const guestCatalogApiUrl = 'https://script.google.com/macros/s/AKfycbyz_RdBEzl4vOrVE46UtNhRR3FUMftUJVqvnYK3C0uvB8_J72smhLpwoWDZ0OGj-P1C/exec'
+const guestCatalogApiUrl = 'https://example.com'
 
 function onSubmit(e) {
   console.log("start：onSubmit")
