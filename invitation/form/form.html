@@ -433,8 +433,11 @@
                         el.disabled = false; // 有効にする
                          // 元々必須だった項目に required を再設定 (ここでは単純化して全てに設定)
                          // ※ name="entry.272875134" (メッセージ欄) など、任意項目は除く処理が必要になる場合がある
-                        if(el.type !== 'radio' && el.name !== 'entry.272875134' && el.name !== 'entry.ABSENCE_MESSAGE') { // ラジオと任意メッセージ欄を除く
+                        if(el.type !== 'radio' && /*el.name === 'entry.1864524029' &&*/ el.name !== 'entry.272875134' && el.name !== 'entry.ABSENCE_MESSAGE') { // ラジオと任意メッセージ欄を除く
                            el.required = true;
+                        }else if (el.name === 'entry.1864524029') {
+                            // ゲスト区分
+                            el.required = isRequired;
                         } else if (el.type === 'radio' && el.checked) {
                            // ラジオボタンはグループで一つ必須だが、個別に required を付けることが多いので、
                            // 表示されるセクションのラジオは必須扱い（グループに required があればOK）
