@@ -81,6 +81,37 @@
             gap: 10px;
         }
 
+        .postal-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .postal-group input[type="text"] {
+            flex: 1;
+        }
+
+        .postal-search-btn {
+            background-color: #8c7380;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .postal-search-btn:hover {
+            background-color: #745c6a;
+        }
+
+        .postal-search-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
         .name-group input[type="text"] {
             width: calc(50% - 5px); /* 姓・名で分割 */
         }
@@ -224,14 +255,20 @@
 
                 <div class="form-group">
                     <label>郵便番号<span class="required-mark">*</span></label>
-                    <div class="name-group">
-                        <input type="text" name="entry.1061603509" placeholder="1234567（ハイフン無し）" required>
+                    <div class="postal-group">
+                        <input type="text" id="postal-code-attendance" name="entry.1061603509" placeholder="1234567（ハイフン無し）" 
+                               pattern="[0-9]{7}" 
+                               maxlength="7"
+                               inputmode="numeric"
+                               title="半角数字7桁で入力してください"
+                               required>
+                        <button type="button" class="postal-search-btn" onclick="searchAddress('attendance')">住所検索</button>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>ご住所<span class="required-mark">*</span></label>
-                    <input type="text" name="entry.749087560" placeholder="" required>
+                    <input type="text" id="address-attendance" name="entry.749087560" placeholder="" required>
                 </div>
 
                  <div class="form-group">
@@ -321,14 +358,20 @@
 
                 <div class="form-group">
                     <label>郵便番号<span class="required-mark">*</span></label>
-                    <div class="name-group">
-                        <input type="text" name="entry.1061603509" placeholder="1234567（ハイフン無し）" required>
+                    <div class="postal-group">
+                        <input type="text" id="postal-code-absence" name="entry.1061603509" placeholder="1234567（ハイフン無し）" 
+                               pattern="[0-9]{7}" 
+                               maxlength="7"
+                               inputmode="numeric"
+                               title="半角数字7桁で入力してください"
+                               required>
+                        <button type="button" class="postal-search-btn" onclick="searchAddress('absence')">住所検索</button>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>ご住所<span class="required-mark">*</span></label>
-                    <input type="text" name="entry.749087560" placeholder="" required>
+                    <input type="text" id="address-absence" name="entry.749087560" placeholder="" required>
                 </div>
 
                 <div class="form-group">
@@ -479,6 +522,45 @@
                 setRequired(absenceDetailsSection, false);
              }
         });
+
+        // 郵便番号から住所を検索する関数
+        function searchAddress(type) {
+            const postalCodeInput = document.getElementById(`postal-code-${type}`);
+            const addressInput = document.getElementById(`address-${type}`);
+            const postalCode = postalCodeInput.value.replace(/[^0-9]/g, '');
+            
+            if (postalCode.length !== 7) {
+                alert('郵便番号は7桁で入力してください');
+                return;
+            }
+            
+            // ボタンを無効化
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = '検索中...';
+            
+            // 郵便番号APIを使用して住所を取得
+            fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${postalCode}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 200 && data.results) {
+                        const result = data.results[0];
+                        const address = result.address1 + result.address2 + result.address3;
+                        addressInput.value = address;
+                    } else {
+                        alert('該当する住所が見つかりませんでした');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('住所の検索中にエラーが発生しました');
+                })
+                .finally(() => {
+                    // ボタンを有効化
+                    button.disabled = false;
+                    button.textContent = '住所検索';
+                });
+        }
 
     </script>
 </body>
