@@ -443,8 +443,9 @@
                          // ※ name="entry.272875134" (メッセージ欄) など、任意項目は除く処理が必要になる場合がある
                         if(el.type !== 'radio' && /*el.name === 'entry.1864524029' &&*/ el.name !== 'entry.272875134' && el.name !== 'entry.ABSENCE_MESSAGE') { // ラジオと任意メッセージ欄を除く
                            el.required = true;
-                        }else if (el.name === 'entry.1864524029') {
+                        }else if (el.name === 'entry.1864524029' || el.name === 'entry.848965256') {
                             // ゲスト区分
+                            // 同伴者数
                             el.required = isRequired;
                         } else if (el.type === 'radio' && el.checked) {
                            // ラジオボタンはグループで一つ必須だが、個別に required を付けることが多いので、

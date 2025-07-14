@@ -237,7 +237,7 @@
                  <div class="form-group">
                     <label>同伴者数<span class="required-mark">*</span></label>
                     <div class="radio-group">
-                        <label><input type="radio" name="entry.848965256" value="なし" required> なし</label>
+                        <label><input type="radio" name="entry.848965256" value="なし" required checked="checked"> なし</label>
                         <label><input type="radio" name="entry.848965256" value="1名" required> 1名</label>
                         <label><input type="radio" name="entry.848965256" value="2名" required> 2名</label>
                         <label><input type="radio" name="entry.848965256" value="3名" required> 3名</label>
@@ -443,8 +443,9 @@
                          // ※ name="entry.272875134" (メッセージ欄) など、任意項目は除く処理が必要になる場合がある
                         if(el.type !== 'radio' && /*el.name === 'entry.1864524029' &&*/ el.name !== 'entry.272875134' && el.name !== 'entry.ABSENCE_MESSAGE') { // ラジオと任意メッセージ欄を除く
                            el.required = true;
-                        }else if (el.name === 'entry.1864524029') {
+                        }else if (el.name === 'entry.1864524029' || el.name === 'entry.848965256') {
                             // ゲスト区分
+                            // 同伴者数
                             el.required = isRequired;
                         } else if (el.type === 'radio' && el.checked) {
                            // ラジオボタンはグループで一つ必須だが、個別に required を付けることが多いので、
