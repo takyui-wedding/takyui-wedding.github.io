@@ -17,18 +17,35 @@ function debugInsertGuest(){
           guestId: "",
           companionId: "",
           guestCategory: "新郎側",
-          nameKanji: "中田拓実",
-          lastNameKanji: "中田",
-          firstNameKanji: "拓実",
-          nameKana: "ナカダタクミ",
-          lastNameKana: "ナカダ",
-          firstNameKana: "タクミ",
+          nameKanji: "山田太郎",
+          lastNameKanji: "山田",
+          firstNameKanji: "太郎",
+          nameKana: "ヤマダタロウ",
+          lastNameKana: "ヤマダ",
+          firstNameKana: "タロウ",
           gender: "男性",
-          emailAddress: "codebreaker4423@gmail.com",
-          postalCode: "187-0002",
-          address: "東京都小平市花小金井6-3-7　みやび野ハイツ306",
+          emailAddress: "email@example.com",
+          postalCode: "1008111",
+          address: "東京都千代田区千代田１−１",
           comment: "この度はおめでとうございます。",
-          answerTimestamp: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd: hh:mm:ss.SSS')
+          answerTimestamp: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd: HH:mm:ss.SSS')
+        },
+        {
+          guestId: "",
+          companionId: "",
+          guestCategory: "",
+          nameKanji: "山田花子",
+          lastNameKanji: "山田",
+          firstNameKanji: "花子",
+          nameKana: "ヤマダハナコ",
+          lastNameKana: "ヤマダ",
+          firstNameKana: "ハナコ",
+          gender: "",
+          emailAddress: "",
+          postalCode: "",
+          address: "",
+          comment: "",
+          answerTimestamp: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd: HH:mm:ss.SSS')
         }
       ]
     }
@@ -46,9 +63,10 @@ function debugInsertGuest(){
 
 function debugSendEmail(){
   console.log("start：debugSendEmail")
-  var email = 'codebreaker4423@gmail.com'
-  var guestId = 'TEST1'
+  var email = 'email@example.com'
+  var guestId = 'TEST2'
+  var name = '山田太郎様'
 
-  sendImportantEmail(email,guestId)
+  sendImportantEmail(email,guestId,name)
 
 }

@@ -31,6 +31,11 @@
             margin-bottom: 20px;
         }
 
+        h2 {
+            color: #a58faa; /* 結婚式らしい落ち着いた色合い */
+            margin-bottom: 10px;
+        }
+
         p {
             color: #555;
             line-height: 1.6;
@@ -65,8 +70,8 @@
 </head>
 <body>
     <div class="container">
-        <!--<p>{{NAME}}様</p>-->
-        <p>中田様</p>
+        <!--<p>{{NAME}}</p>-->
+        <h2>{{NAME}}</h2>
         <div class="heart">♥</div>
         <h1>ご回答ありがとうございました</h1>
         <p>この度は　結婚式のご招待状にご回答いただき　誠にありがとうございます</p>
@@ -74,7 +79,7 @@
         <p>当日　皆様にお会いできるのを<br>新郎新婦共々楽しみにしています</p>
         <p>以下のQRコードは受付時に使用しますので当日まで大切にお持ちください</p>
         <img src="cid:qr_image">
-        <p>ID:TEST1</p>
+        <p>ID:{{ゲストID}}</p>
     </div>
 </body>
 </html>

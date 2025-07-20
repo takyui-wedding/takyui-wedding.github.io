@@ -1,4 +1,4 @@
-const guestCatalogApiUrl = 'https://example.com'
+const guestCatalogApiUrl = getEnvironmentVariable('API_URL');
 
 function onSubmit(e) {
   console.log("start：onSubmit")
@@ -11,6 +11,7 @@ function onSubmit(e) {
   //var companionList = {};
   var companionList = [];
   var representativeGuest = initializeGuest(); //代表ゲスト
+  var answerTimestamp = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd: HH:mm:ss.SSS'); //回答日時
 
   for(var index in responses){
     var title = responses[index].getItem().getTitle();
@@ -73,6 +74,8 @@ function onSubmit(e) {
     representativeGuest.nameKanji = representativeGuest.lastNameKanji + representativeGuest.firstNameKanji;
     //氏名（カナ）
     representativeGuest.nameKana = representativeGuest.lastNameKana + representativeGuest.firstNameKana;
+    //回答日時セット
+    representativeGuest.answerTimestamp = answerTimestamp;
 
   }
 
@@ -80,8 +83,14 @@ function onSubmit(e) {
 
   for(var i = 1; i <= companionCount; i++){
     var companionGuest = initializeGuest()
-    companionGuest.nameKanji = companionList[i * 2 - 1];
-    companionGuest.nameKana = companionList[i * 2];
+    companionGuest.lastNameKanji = companionList[i * 4 - 4];
+    companionGuest.firstNameKanji = companionList[i * 4 - 3];
+    companionGuest.lastNameKana = companionList[i * 4 - 2];
+    companionGuest.firstNameKana = companionList[i * 4 - 1];
+    companionGuest.nameKanji = companionGuest.lastNameKanji + companionGuest.firstNameKanji
+    companionGuest.nameKana = companionGuest.lastNameKana + companionGuest.lastNameKana
+    //回答日時セット
+    companionGuest.answerTimestamp = answerTimestamp;
     guestList.push(companionGuest);
   }
   
@@ -93,8 +102,21 @@ function onSubmit(e) {
     const guestId = callGuestCatalogApi_Post(param).guestId;
     console.log(guestId);
 
-    sendImportantEmail(emailAddress,guestId);
+    sendImportantEmail(emailAddress,guestId,createToName(guestList));
   }
+}
+
+// 環境変数管理
+function getEnvironmentVariable(key) {
+  // Google Apps Scriptでは環境変数にScript Propertiesを使用
+  const scriptProperties = PropertiesService.getScriptProperties();
+  const value = scriptProperties.getProperty(key);
+  
+  if (!value) {
+    throw new Error(`環境変数 ${key} が設定されていません`);
+  }
+  
+  return value;
 }
 
 function initializeGuest(){
@@ -114,7 +136,7 @@ function initializeGuest(){
           postalCode: "",
           address: "",
           comment: "",
-          answerTimestamp: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd: hh:mm:ss.SSS')
+          answerTimestamp: Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd: HH:mm:ss.SSS')
         }
   return initGuest;
 }
@@ -153,12 +175,12 @@ function callGuestCatalogApi_Post(payload) {
   return JSON.parse(response.getContentText());
 }
 
-function sendImportantEmail(email,guestId) {
+function sendImportantEmail(email,guestId,name) {
   console.log("start：sendImportantEmail")
   var subject = 'ご回答ありがとうございました。';
 
   //本文.htmlをgetContent
-  var html = HtmlService.createHtmlOutputFromFile("mail_content").getContent(); 
+  var html = HtmlService.createHtmlOutputFromFile("mail_content").getContent().replace(/{{ゲストID}}/g, guestId).replace(/{{NAME}}/g, name); 
 
   var qr_image = createQrCode(guestId);
 
@@ -171,7 +193,7 @@ function sendImportantEmail(email,guestId) {
 }
 
 function createQrCode(code_data) {
-  console.log("start：createQrCode")
+  console.log("start：createQrCode："+code_data)
   var url = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + code_data;
   var option = {
       method: "get",
@@ -179,11 +201,26 @@ function createQrCode(code_data) {
     };
   var response = UrlFetchApp.fetch(url, option);
   var fileBlob = response.getBlob();
-  var folder = DriveApp.getFolderById("1vVYpoP7PJlsq3VugTe6_O_UiJtHSb4da");
-  var fileName = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddhhmmss')+ '.png';
+  var folderId = getEnvironmentVariable('FOLDER_ID');
+  var folder = DriveApp.getFolderById(folderId);
+  var fileName = code_data + '_' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyyMMddhhmmss')+ '.png';
   var file = folder.createFile(fileBlob).setName(fileName);
   var fileUrl = file.getUrl();
   var fileId = fileUrl.replace("https://drive.google.com/file/d/","").replace("/view?usp=drivesdk","");
   return DriveApp.getFileById(fileId).getBlob();
+}
+
+function createToName(guestList) {
+  console.log("start：createToName");
+  var name = '';
+  for (var i = 0; i < guestList.length; i++) {
+    if(i == 0){
+      name = name + guestList[i].nameKanji+' 様';
+    }else{
+      name = name + '<br>' + guestList[i].nameKanji+' 様';
+    }
+  }
+
+  return name;
 }
 
