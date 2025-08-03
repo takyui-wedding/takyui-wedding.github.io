@@ -126,6 +126,113 @@ function getMovieUrl(guestId){
   console.log('[getMovieUrl] 終了 - 戻り値: undefined (該当なし)');
 }
 
+function getGuestListById(guestId){
+  console.log('[getGuestListById] 開始 - 引数:', guestId);
+
+  //Googleスプレッドシートのセル範囲を取得
+  var range = sheet.getDataRange();
+  //Googleスプレッドシートのセル範囲のデータを取得
+  var values = range.getValues();
+
+  var guestList = [];
+
+  for (var i = 0; i < values.length; i++) {
+    if (values[i][0] == guestId) {
+      guestList.push(getGuestInfo(values[i]));
+    }
+  }
+
+  console.log('[getGuestListById] 終了 - 戻り値:件数=', guestList.length);
+  return guestList;
+}
+
+function getGuestListByKana(nameKana){
+  console.log('[getGuestListByKana] 開始 - 引数:', nameKana);
+
+  //Googleスプレッドシートのセル範囲を取得
+  var range = sheet.getDataRange();
+  //Googleスプレッドシートのセル範囲のデータを取得
+  var values = range.getValues();
+
+  var guestList = [];
+
+  for (var i = 0; i < values.length; i++) {
+    if (values[i][0].includes(nameKana)) {
+      guestList.push(getGuestInfo(values[i]));
+    }
+  }
+
+  console.log('[getGuestListByKana] 終了 - 戻り値:件数=', guestList.length);
+  return guestList;
+}
+
+function getGuestListALL(){
+  console.log('[getGuestListALL] 開始');
+
+  //Googleスプレッドシートのセル範囲を取得
+  var range = sheet.getDataRange();
+  //Googleスプレッドシートのセル範囲のデータを取得
+  var values = range.getValues();
+
+  var guestList = [];
+
+  for (var i = 0; i < values.length; i++) {
+    if (!values[i][20]) {
+      guestList.push(getGuestInfo(values[i]));
+    }
+  }
+
+  console.log('[getGuestListALL] 終了 - 戻り値:件数=', guestList.length);
+  return guestList;
+}
+
+function getGuestInfo(values_i){
+  var guestInfo = {};
+
+  // ゲストID
+  guestInfo.guestId = values_i[0];
+  // 同伴者ID
+  guestInfo.companionId = values_i[1];
+  // ゲスト区分
+  guestInfo.guestCategory = values_i[2];
+  // 関係
+  guestInfo.relationship = values_i[3];
+  // 氏名（漢字）
+  guestInfo.nameKanji = values_i[4];
+  // 氏名_性（漢字）
+  guestInfo.lastNameKanji = values_i[5];
+  // 氏名_名（漢字）
+  guestInfo.firstNameKanji = values_i[6];
+  // 氏名（カナ）
+  guestInfo.nameKana = values_i[7];
+  // 氏名_性（カナ）
+  guestInfo.lastNameKana = values_i[8];
+  // 氏名_名（カナ）
+  guestInfo.firstNameKana = values_i[9];
+  // 性別
+  guestInfo.gender = values_i[10];
+  // メールアドレス
+  guestInfo.emailAddress = values_i[11];
+  // 郵便番号
+  guestInfo.postalCode = values_i[12];
+  // 住所
+  guestInfo.address = values_i[13];
+  // コメント
+  guestInfo.comment = values_i[14];
+  // 回答日時
+  guestInfo.answerTimestamp = values_i[15];
+  // 登録日時
+  guestInfo.registerTimestamp = values_i[16];
+  // 更新日時
+  guestInfo.updateTimestamp = values_i[17];
+  // 動画URL
+  guestInfo.movieUrl = values_i[18];
+  // 出席フラグ
+  guestInfo.attendanceFlag = values_i[19];
+
+  return guestInfo;
+}
+
 function getGuestList(guestId){
   console.log('[getGuestList] 開始 - 引数:', guestId);
 

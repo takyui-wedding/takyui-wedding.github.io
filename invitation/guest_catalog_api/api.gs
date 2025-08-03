@@ -33,8 +33,17 @@ function doGet(e) {
 
       case "ゲスト情報取得":
         var guestId = e.parameter.guestId;
-        console.log(e.parameter.guestId)
-        var guestList = getGuestList(guestId);
+        var nameKana = e.parameter.nameKana;
+        var guestList = [];
+
+        if(!guestId){
+          guestList = getGuestListById(guestId);
+        }else if(!nameKana){
+          guestList = getGuestListByKana(nameKana);
+        }else{
+          guestList = getGuestListAll();
+        }
+
         payload = JSON.stringify({
             guestList: guestList
           });
