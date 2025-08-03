@@ -1,4 +1,6 @@
 function doGet(e) {
+  console.log('[doGet] 開始 - パラメータ:', JSON.stringify(e.parameter));
+  
   const lock = LockService.getScriptLock();
   try {
     lock.waitLock(30000); // 30秒間待機
@@ -44,15 +46,17 @@ function doGet(e) {
     
   } catch (e) {
     Logger.log('処理中にエラーが発生しました: ' + e.toString());
+    console.log('[doGet] エラー:', e.toString());
   } finally {
     lock.releaseLock();
-    console.log(payload);
+    console.log('[doGet] 終了 - レスポンス:', payload);
     return ContentService.createTextOutput(payload).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
 function doPost(e) {
-  console.log("doPost開始");
+  console.log('[doPost] 開始');
+  console.log('[doPost] リクエストボディ:', e.postData.contents);
 
   const lock = LockService.getScriptLock();
   try {
@@ -61,12 +65,12 @@ function doPost(e) {
     var jsonData = JSON.parse(requestBody);
     var method = jsonData.method;
     var payload;
-    console.log(method);
+    console.log('[doPost] メソッド:', method);
 
     switch(method){
       case "ゲスト一覧登録":
         var guestList = jsonData.guestList;
-        console.log(guestList);
+        console.log('[doPost] ゲスト一覧:', guestList);
 
         var guestId = createGuestId();
         for(var index in guestList){
@@ -84,7 +88,7 @@ function doPost(e) {
 
       case "出席フラグ更新":
         var guestId = jsonData.guestId;
-        console.log(guestId);
+        console.log('[doPost] ゲストID:', guestId);
 
         var message = updateAttendanceFlag(guestId)
 
@@ -101,9 +105,10 @@ function doPost(e) {
       
   } catch (e) {
     Logger.log('処理中にエラーが発生しました: ' + e.toString());
+    console.log('[doPost] エラー:', e.toString());
   } finally {
     lock.releaseLock();
-    console.log(payload);
+    console.log('[doPost] 終了 - レスポンス:', payload);
     return ContentService.createTextOutput(payload).setMimeType(ContentService.MimeType.JSON);
   }
 }

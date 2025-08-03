@@ -3,16 +3,21 @@ const sheetName = getEnvironmentVariable('SPREADSHEET_SHEETNAME');
 const sheet = SpreadsheetApp.openById(spreadsheetId).getSheetByName(sheetName);
 
 function getMaxGuestId(){
+  console.log('[getMaxGuestId] 開始');
+  
   var lastRow = sheet.getLastRow();
   var maxGuestId = sheet.getRange(lastRow,1).getValue();
   if(maxGuestId == 'ゲストID'){
     maxGuestId = 'G001A';
   }
 
+  console.log('[getMaxGuestId] 終了 - 戻り値:', maxGuestId);
   return maxGuestId;
 }
 
 function getMaxGuestIdNm(){
+  console.log('[getMaxGuestIdNm] 開始');
+  
   var lastRow = sheet.getLastRow();
   var maxGuestId = sheet.getRange(lastRow,1).getValue();
   var maxGuestIdNm = '';
@@ -25,10 +30,13 @@ function getMaxGuestIdNm(){
     maxGuestIdNm = maxGuestId.substring(1, 3);
   }
 
+  console.log('[getMaxGuestIdNm] 終了 - 戻り値:', maxGuestIdNm);
   return maxGuestIdNm;
 }
 
 function createGuestId(){
+  console.log('[createGuestId] 開始');
+  
   const maxGuestIdNm = getMaxGuestIdNm();
 
   // 2. 切り出した文字列を10進数の数値に変換
@@ -43,11 +51,14 @@ function createGuestId(){
   // 結果が2桁以上の場合 (例: 10)、そのまま "10" になる
   const formattedResult = incrementedValue.toString().padStart(2, '0');
 
-  return 'G'+formattedResult + getRandomDigitAndLetter();
+  const newGuestId = 'G'+formattedResult + getRandomDigitAndLetter();
+  console.log('[createGuestId] 終了 - 戻り値:', newGuestId);
+  return newGuestId;
 }
 
 function insertGuest(guest){
-  console.log(guest);
+  console.log('[insertGuest] 開始 - 引数:', guest);
+  
   var nowTimestamp = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd: HH:mm:ss.SSS');
 
   var guestInfo = [];
@@ -93,9 +104,11 @@ function insertGuest(guest){
   guestInfo[19] = '';
 
   sheet.appendRow(guestInfo);
+  console.log('[insertGuest] 終了');
 }
 
 function getMovieUrl(guestId){
+  console.log('[getMovieUrl] 開始 - 引数:', guestId);
 
   //Googleスプレッドシートのセル範囲を取得
   var range = sheet.getDataRange();
@@ -104,13 +117,17 @@ function getMovieUrl(guestId){
 
   for (var i = 0; i < values.length; i++) {
     if (values[i][0] == guestId) {
-      return values[i][18];
+      const movieUrl = values[i][18];
+      console.log('[getMovieUrl] 終了 - 戻り値:', movieUrl);
+      return movieUrl;
     }
   }
 
+  console.log('[getMovieUrl] 終了 - 戻り値: undefined (該当なし)');
 }
 
 function getGuestList(guestId){
+  console.log('[getGuestList] 開始 - 引数:', guestId);
 
   //Googleスプレッドシートのセル範囲を取得
   var range = sheet.getDataRange();
@@ -168,10 +185,12 @@ function getGuestList(guestId){
     }
   }
 
+  console.log('[getGuestList] 終了 - 戻り値:件数=', guestList.length);
   return guestList;
 }
 
 function updateAttendanceFlag(guestId){
+  console.log('[updateAttendanceFlag] 開始 - 引数:', guestId);
 
   //Googleスプレッドシートのセル範囲を取得
   var range = sheet.getDataRange();
@@ -195,6 +214,7 @@ function updateAttendanceFlag(guestId){
     }
   }
 
+  console.log('[updateAttendanceFlag] 終了 - 戻り値:', message);
   return message;
 
 }
