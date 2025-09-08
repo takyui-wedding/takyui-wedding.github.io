@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>～Mystery answer～</title>
+    <script type="text/javascript">
+        // ひらがなのみかチェックする関数
+        function isHiragana(str) {
+            return /^[\u3040-\u309F]+$/.test(str);
+        }
+        
+        // フォーム送信時の処理
+        function validateAnswer(event) {
+            event.preventDefault(); // デフォルトの送信を防ぐ
+            
+            const answerInput = document.getElementById('answer-word');
+            const answer = answerInput.value.trim();
+            
+            // ひらがなチェック
+            if (!isHiragana(answer)) {
+                alert('回答はひらがなで入力してください');
+                return false;
+            }
+            
+            // 正解判定
+            if (answer === 'ありがとう') {
+                // 正解の場合
+                window.location.href = 'correct-answer.html';
+            } else {
+                // 不正解の場合
+                alert('不正解です。もう一度考えてみてください。');
+                answerInput.value = ''; // 入力欄をクリア
+            }
+            
+            return false;
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0; /* 上下の余白を追加 */
+        }
+
+        .container {
+            /* background-color: #fdf7ef; */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            height: 800px;
+            /* 背景画像を表示 */
+            background-image: url(image/305505_41.jpg);
+        }
+
+        form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        /* 全てのテキスト・メール入力欄の共通スタイル */
+        input[type="text"]{
+            width: 100%; /* Name Group内の input は .name-group input で上書きされる */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* paddingを含めてwidth 100% に */
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #a58faa;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block; /* 中央揃えのために block 要素に */
+            margin: 30px auto 0; /* 上にマージン、左右autoで中央揃え */
+            width: auto; /* 幅を自動に */
+            min-width: 150px; /* 最低幅 */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #8c7380;
+        }
+
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        /* 必須マーク (任意) */
+        .required-mark {
+            color: red;
+            font-size: 0.8em;
+            margin-left: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>wedding mystery</h1>
+        <p class="message">
+            新郎新婦が皆さんに伝えたかった言葉は何だったのでしょうか？<br/>
+            会場に散りばめられた謎からあなたはひとつの答えを導き出しました。
+        </p>
+        <br/>
+        <form onsubmit="return validateAnswer(event);" class="c-form">
+            <div id="attendance-details">
+                <div class="form-group">
+                    <label>導き出された言葉を入力してください<span class="required-mark">*</span></label>
+                    <div class="name-group">
+                        <input type="text" id="answer-word" name="answer-word" required>
+                    </div>
+                </div>
+            </div>
+             <button type="submit">送信する</button>
+        </form>
+    </div>
+</body>
+</html>
