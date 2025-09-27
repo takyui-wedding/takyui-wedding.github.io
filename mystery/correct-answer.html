@@ -130,9 +130,65 @@
             margin-left: 4px;
         }
 
+        /* ローディングオーバーレイ */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        /* ローディングスピナー */
+        .loading-spinner {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #a58faa;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #555;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
+    <!-- ローディングオーバーレイ -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text">送信中...</div>
+        </div>
+    </div>
+
     <div class="container">
         <h1>Congratulations！</h1>
         <p class="message">皆さんにお伝えしたかった言葉は</p>
@@ -183,6 +239,16 @@
         // ボタン要素と入力要素を取得
         const submitButton = document.getElementById('submitButton');
         const guestIdText = document.getElementById('guestId');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        // ローディング表示/非表示の関数
+        function showLoading() {
+            loadingOverlay.classList.add('active');
+        }
+
+        function hideLoading() {
+            loadingOverlay.classList.remove('active');
+        }
 
         // 送信ボタンがクリックされたときの処理
         submitButton.addEventListener('click', async () => {
@@ -193,6 +259,9 @@
                 alert('IDを入力してください。');
                 return; // IDが空なら処理を中断
             }
+
+            // ローディングを表示
+            showLoading();
 
             // APIエンドポイントのベースURL (実際のURLに置き換えてください)
             const baseUrl = 'https://script.google.com/macros/s/AKfycbxXx_FVxB8-ePk6P01xv9dF6j6_vbriI-oGksIZi95pZ8jtW_DexBOz63XqlwvSy9Fi/exec';
@@ -217,15 +286,18 @@
                         if (data && data.movieUrrl) {
                             // redirectUrl が存在すれば、そのURLにリダイレクト
                             console.log('リダイレクトします:', data.movieUrrl);
+                            hideLoading();
                             alert('新郎新婦からメッセージが届いております。');
                             window.location.href = data.movieUrrl;
                         } else {
                             // 正常終了したが、期待するデータ形式でない場合
+                            hideLoading();
                             console.error('サーバーからの応答にredirectUrlが含まれていませんでした。', data);
                             alert('サーバーからの応答が予期しない形式です。');
                         }
                     } catch (jsonError) {
                         // JSON解析に失敗した場合
+                        hideLoading();
                         console.error('JSON解析エラー:', jsonError);
                         alert('サーバーからの応答を処理できませんでした。');
                     }
@@ -244,10 +316,12 @@
                         // エラー詳細の取得に失敗した場合
                          console.error('エラー詳細の取得失敗:', textError);
                     }
+                    hideLoading();
                     alert(errorMessage);
                 }
             } catch (networkError) {
                 // ネットワークエラーやfetch自体の失敗
+                hideLoading();
                 console.error('ネットワークエラー:', networkError);
                 alert('リクエストの送信中にネットワークエラーが発生しました。接続を確認してください。');
             }
