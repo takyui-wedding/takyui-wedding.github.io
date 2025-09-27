@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>～Mystery answer～</title>
+    <script type="text/javascript">
+        let submitted = false;
+        let userID = '';
+    </script>
+    <iframe
+        name="hidden_iframe"
+        id="hidden_iframe"
+        style="display: none"
+        onload="if(submitted && userID){window.location='correct-answer.html';}else if(submitted){window.location='thanks_absence.html';}"
+    ></iframe>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0; /* 上下の余白を追加 */
+        }
+
+        .container {
+            background-color: #fdf7ef;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            height: 950px;
+            background-image: url(image/answer2.jpg);
+            background-size:auto; /*背景画像のサイズ指定*/
+
+            /* 背景画像を表示 */
+            /*background-image: url(305505_26.jpg);
+            position: relative;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 28px;
+            padding-right: 28px;*/
+        }
+
+        form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #555;
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: "SchoolHouse Cursive B","Times New Roman",sans-serif;
+            text-shadow:
+	            whitesmoke 1px 1px 2px, whitesmoke -1px 1px 2px,
+	            whitesmoke 1px -1px 2px, whitesmoke -1px -1px 2px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        /* 全てのテキスト・メール入力欄の共通スタイル */
+        input[type="text"]{
+            width: 100%; /* Name Group内の input は .name-group input で上書きされる */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* paddingを含めてwidth 100% に */
+            font-size: 16px;
+        }
+
+        button[type="button"] {
+            background-color: #a58faa;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block; /* 中央揃えのために block 要素に */
+            margin: 30px auto 0; /* 上にマージン、左右autoで中央揃え */
+            width: auto; /* 幅を自動に */
+            min-width: 150px; /* 最低幅 */
+        }
+
+        button[type="button"]:hover {
+            background-color: #8c7380;
+        }
+
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+        }
+
+        .message span {
+            font-size: large;
+            font-weight:bold;
+            padding: 0 0.1em;
+        }
+
+        /* 必須マーク (任意) */
+        .required-mark {
+            color: red;
+            font-size: 0.8em;
+            margin-left: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Congratulations！</h1>
+        <p class="message">皆さんにお伝えしたかった言葉は</p>
+        <p class="message"><span>ありがとう</span>です🌸</p>
+        <p class="message">
+            今回大切な方々をお招きし<br/>
+            結婚披露宴を開催するにあたり<br/>
+            新郎新婦が好きな謎解きを用いて<br/>
+            最大限のおもてなしをしたいと考え<br/>
+            自作の謎解きゲームを作成しました<br/>
+            <br/>
+            楽しんでいただけましたでしょうか？<br/>
+        </p>
+        <p class="message">
+            改めてのご挨拶になりますが<br/>
+            私達は皆様に支えられ<br/>
+            本日を迎えることができました<br/>
+            <br/>
+            皆さんと過ごした日々は<br/>
+            私達にとって一生の宝物です<br/>
+            今後ともどうぞよろしくお願いいたします<br/>
+            （謎解きや脱出ゲームなども<br/>
+            一緒に遊んでくれると嬉しいです✨）<br/>
+        </p>
+
+        <p class="message">
+            ここまでお付き合いいただいた皆様に<br/>
+            新郎新婦からプレゼントがございます<br/>
+            <br/>
+            <b>この場にいることの証明</b>となったものに<br/>
+            記載のある「ご自身のID」を入力し<br/>
+            プレゼントを受け取ってください<br/>
+        </p>
+        <form method="post" onsubmit="submitted=true;" class="c-form">
+            <div id="attendance-details">
+                <div class="form-group">
+                    <label>あなた自身のIDを入力してください<span class="required-mark">*</span></label>
+                    <div class="name-group">
+                        <input type="text" id="guestId" name="guestId" required>
+                    </div>
+                </div>
+            </div>
+             <button type="button" id="submitButton">送信する</button>
+        </form>
+    </div>
+
+    <script>
+        // ボタン要素と入力要素を取得
+        const submitButton = document.getElementById('submitButton');
+        const guestIdText = document.getElementById('guestId');
+
+        // 送信ボタンがクリックされたときの処理
+        submitButton.addEventListener('click', async () => {
+            const guestId = guestIdText.value.trim(); // 入力値を取得し、前後の空白を削除
+
+            // IDが入力されているかチェック
+            if (!guestId) {
+                alert('IDを入力してください。');
+                return; // IDが空なら処理を中断
+            }
+
+            // APIエンドポイントのベースURL (実際のURLに置き換えてください)
+            const baseUrl = 'https://script.google.com/macros/s/AKfycbxlXXRkMNBqmNQLmMCVOfyKlDY0h9VijZcG3j9CNQGoE5bnNv9k0601QozsFOr_Duz-/exec';
+            // クエリパラメータを付けてURLを構築 (IDをURLエンコードする)
+            const apiUrl = `${baseUrl}?method=動画URL取得&guestId=${encodeURIComponent(guestId)}`;
+
+            try {
+                // fetch APIを使用してGETリクエストを送信
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        // 必要に応じてヘッダーを追加
+                        'Accept': 'application/json' // サーバーがJSONを返すことを期待
+                    }
+                });
+
+                // サーバーからの応答ステータスコードをチェック
+                if (response.ok) {
+                    // サーバー処理が正常終了 (ステータスコード 200-299)
+                    try {
+                        const data = await response.json(); // 応答ボディをJSONとして解析
+                        if (data && data.movieUrrl) {
+                            // redirectUrl が存在すれば、そのURLにリダイレクト
+                            console.log('リダイレクトします:', data.movieUrrl);
+                            alert('新郎新婦からメッセージが届いております。');
+                            window.location.href = data.movieUrrl;
+                        } else {
+                            // 正常終了したが、期待するデータ形式でない場合
+                            console.error('サーバーからの応答にredirectUrlが含まれていませんでした。', data);
+                            alert('サーバーからの応答が予期しない形式です。');
+                        }
+                    } catch (jsonError) {
+                        // JSON解析に失敗した場合
+                        console.error('JSON解析エラー:', jsonError);
+                        alert('サーバーからの応答を処理できませんでした。');
+                    }
+                } else {
+                    // サーバー処理が異常終了 (ステータスコード 4xx, 5xx など)
+                    console.error('サーバーエラー:', response.status, response.statusText);
+                    // エラーメッセージを組み立て (可能であればサーバーからの詳細を使う)
+                    let errorMessage = `サーバー処理でエラーが発生しました。\nステータス: ${response.status}`;
+                    try {
+                        // サーバーがエラー詳細をテキストで返している場合、それを表示
+                        const errorText = await response.text();
+                        if(errorText) {
+                            errorMessage += `\n詳細: ${errorText}`;
+                        }
+                    } catch (textError) {
+                        // エラー詳細の取得に失敗した場合
+                         console.error('エラー詳細の取得失敗:', textError);
+                    }
+                    alert(errorMessage);
+                }
+            } catch (networkError) {
+                // ネットワークエラーやfetch自体の失敗
+                console.error('ネットワークエラー:', networkError);
+                alert('リクエストの送信中にネットワークエラーが発生しました。接続を確認してください。');
+            }
+        });
+    </script>
+</body>
+</html>
